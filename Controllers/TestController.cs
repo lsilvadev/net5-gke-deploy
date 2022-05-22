@@ -9,7 +9,7 @@ namespace TodoApi.Controllers
 		[HttpGet]
 		public string Get()
 		{
-			return ("ok");
+			return ("Ok!");
 		}
 	}
 }
