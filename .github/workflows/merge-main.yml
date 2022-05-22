@@ -30,14 +30,14 @@ jobs:
       - name: Publish
         run: |-
           docker push gcr.io/${{ secrets.PROJECT }}/${{ secrets.GCP_IMAGE }}:develop
-      #- name: Set up gcloud
-      #  run: |
-      #    gcloud config set project ${{ secrets.PROJECT }}
-      #- uses: google-github-actions/get-gke-credentials@v0.2.1
-      #  with:
-      #    cluster_name: ${{ secrets.GKE_CLUSTER }}
-      #    location: ${{ secrets.GKE_LOCATION }}
-      #    credentials: ${{ secrets.GKE_SA_KEY }}
-      #- name: Deploy
-      #  run: |
-      #    kubectl rollout restart deployment -n web ${{ secrets.GCP_IMAGE }}
+      - name: Set up gcloud
+        run: |
+          gcloud config set project ${{ secrets.PROJECT }}
+      - uses: google-github-actions/get-gke-credentials@v0.2.1
+        with:
+          cluster_name: ${{ secrets.GKE_CLUSTER }}
+          location: ${{ secrets.GKE_LOCATION }}
+          credentials: ${{ secrets.GCP_SA_KEY }}
+      - name: Deploy
+        run: |
+          kubectl rollout restart deployment -n default ${{ secrets.GCP_IMAGE }}
