@@ -1,0 +1,62 @@
+name: Tag and Publish on Test
+on:
+  workflow_dispatch:
+    inputs:
+      versionNumber:
+        description: "Version Number"
+        required: true
+        default: "minor"
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+jobs:
+  cicd:
+    name: Release golang-cicd App
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        goos: [ linux ]
+        goarch: [ amd64 ]
+    env:
+      APP_NAME: helm-core
+      NAMESPACE: helm-web
+
+    steps:
+      - name: Install JQ
+        run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+
+      - name: Not exists prerelease
+        run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Checkout
+        run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+
+      - name: Get latest Core version
+        id: latest_version
+        run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+
+      - uses: google-github-actions/setup-gcloud@v0
+        with:
+          version: "275.0.0"
+
+      - name: Set up gcloud dev
+        run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+
+      - name: Increment application version
+        id: new_version
+        shell: bash
+        run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+
+      - name: To copy an image and add a new tag
+        run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+
+      - name: Create tag and github prerelease
+        run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
