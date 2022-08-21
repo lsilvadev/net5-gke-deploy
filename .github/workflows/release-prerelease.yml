@@ -1,0 +1,47 @@
+on:
+  repository_dispatch:
+    types: [ release ]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        goos: [ linux ]
+        goarch: [ amd64 ]
+    
+    env:
+      REPOSITORY_HOST: "https://api.github.com/repos/lsilvadev/net5-gke-deploy"
+    
+    steps:
+      - if: ${{ github.event.client_payload.tag_name == null }}
+        name: Stop if tag_name not provided
+        run: exit 1
+        
+      - name: Install JQ
+        run: sudo apt-get update -y && sudo apt-get install jq -y
+
+      - name: Get release id
+        id: release_id
+        run: |
+          echo ::set-output name=value::$( \
+            curl -X GET "$HOST/releases/tags/$TAG_NAME" \
+              -H "Authorization: token $TOKEN" \
+              | jq '.id' \
+          )
+        env:
+          HOST: ${{ env.REPOSITORY_HOST }}
+          TAG_NAME: ${{ github.event.client_payload.tag_name }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release version ${{ github.event.client_payload.tag_name }}
+        run: |
+          curl -X PATCH "$HOST/releases/$RELEASE_ID" \
+            -H "Authorization: token $TOKEN" \
+            -H 'Content-Type: application/json' \
+            -d '{ "prerelease": false }'
+        env:
+          HOST: ${{ env.REPOSITORY_HOST }}
+          RELEASE_ID: ${{ steps.release_id.outputs.value }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
