@@ -1,8 +1,6 @@
-# CI / CD de aplicação .NET no Google Kubernetes Engine (GKE)
+# CI de aplicação .NET no Google Kubernetes Engine (GKE) com GitHub Actions
 
-Este repositório contém uma API de teste e as pipelines usadas no CI (Continuous Integration).
-
-As pipelines do CI são executadas através do GitHub Actions.
+Este repositório contém uma API de teste e as pipelines usadas no CI (Continuous Integration) através do GitHub Actions.
 
 A estratégia de ramificação em uso é o Trunk-based Development. No <a href="https://medium.com/unicoidtech/trunk-based-development-vs-git-flow-390a2fdecc15">Trunk-based Development</a> os desenvolvedores concentram-se em fazer o trabalho na branch main (linha principal).
 
