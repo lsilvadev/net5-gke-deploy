@@ -1,4 +1,4 @@
-# CI de aplicação .NET no Google Kubernetes Engine (GKE) com GitHub Actions
+# Pipelines de CI de aplicação .NET no Google Kubernetes Engine (GKE) com GitHub Actions
 
 Este repositório contém uma API de teste e as pipelines usadas no CI (Continuous Integration) através do GitHub Actions.
 
